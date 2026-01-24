@@ -175,11 +175,12 @@ const Showreel = () => {
   );
 
   const videoUrl = (fileName: string) =>
-    videoUrlsByFileName[fileName] ?? `/video/${encodeURIComponent(fileName)}`;
+    videoUrlsByFileName[fileName] ??
+    `${import.meta.env.BASE_URL}video/${encodeURIComponent(fileName)}`;
 
   const mainVideo = {
     title: "Showreel 2024",
-    file: "arrampicata.mp4",
+    file: "miscuglio.mp4",
     subtitle: "Un concentrato di tecnologia e visione artistica.",
   };
 
