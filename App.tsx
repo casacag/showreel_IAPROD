@@ -179,7 +179,7 @@ const Showreel = () => {
     `${import.meta.env.BASE_URL}video/${encodeURIComponent(fileName)}`;
 
   const mainVideo = {
-    title: "Showreel 2024",
+    title: "Showreel 2026",
     file: "miscuglio.mp4",
     subtitle: "Un concentrato di tecnologia e visione artistica.",
   };
