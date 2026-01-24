@@ -204,19 +204,28 @@ const Showreel = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="aspect-video w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group"
+            className="w-full"
           >
-            <video
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70"
-              src={videoUrl(mainVideo.file)}
-              playsInline
-              preload="metadata"
-              controls
-              muted
-            />
-            <div className="absolute bottom-8 left-8 pointer-events-none">
-              <h3 className="text-3xl font-bold text-white mb-2">{mainVideo.title}</h3>
-              <p className="text-gray-300">{mainVideo.subtitle}</p>
+            <div className="aspect-video w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group">
+              <video
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70"
+                src={videoUrl(mainVideo.file)}
+                playsInline
+                preload="metadata"
+                controls
+              />
+
+              {/* Desktop overlay (avoid covering controls on mobile) */}
+              <div className="hidden md:block absolute bottom-8 left-8 pointer-events-none">
+                <h3 className="text-3xl font-bold text-white mb-2">{mainVideo.title}</h3>
+                <p className="text-gray-300">{mainVideo.subtitle}</p>
+              </div>
+            </div>
+
+            {/* Mobile caption */}
+            <div className="md:hidden mt-4 px-2">
+              <h3 className="text-xl font-bold text-white">{mainVideo.title}</h3>
+              <p className="text-gray-400 text-sm mt-1">{mainVideo.subtitle}</p>
             </div>
           </motion.div>
 
@@ -226,16 +235,25 @@ const Showreel = () => {
               <motion.div 
                 key={idx}
                 whileHover={{ y: -5 }}
-                className="group relative rounded-xl overflow-hidden border border-white/5 aspect-[4/3] cursor-pointer"
+                className="w-full"
               >
-                <video
-                  className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
-                  src={videoUrl(sample.file)}
-                  controls
-                  playsInline
-                  preload="metadata"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4 pointer-events-none">
+                <div className="group relative rounded-xl overflow-hidden border border-white/5 aspect-[4/3]">
+                  <video
+                    className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
+                    src={videoUrl(sample.file)}
+                    controls
+                    playsInline
+                    preload="metadata"
+                  />
+
+                  {/* Overlay title on larger screens (don't cover controls on mobile) */}
+                  <div className="hidden sm:flex absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex-col justify-end p-4 pointer-events-none">
+                    <h4 className="font-bold text-white text-sm">{sample.title}</h4>
+                  </div>
+                </div>
+
+                {/* Mobile caption */}
+                <div className="sm:hidden mt-2 px-1">
                   <h4 className="font-bold text-white text-sm">{sample.title}</h4>
                 </div>
               </motion.div>
