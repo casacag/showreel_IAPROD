@@ -385,7 +385,7 @@ const Contact = () => {
                   href="mailto:alessio.cocco.video@gmail.com" 
                   className="inline-flex items-center gap-3 px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl transition-all shadow-xl shadow-purple-600/20 text-lg group"
                 >
-                  alessio.cocco.video@gmail.com
+                  contattami
                   <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
