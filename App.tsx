@@ -54,7 +54,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section id="home" className="relative h-auto md:min-h-screen flex items-center justify-center pt-32 pb-12 md:pt-20 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute top-1/4 -left-20 w-72 h-72 bg-purple-600/20 rounded-full blur-[120px] animate-pulse"></div>
       <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-blue-600/20 rounded-full blur-[120px] animate-pulse delay-700"></div>
@@ -107,7 +107,7 @@ const Mainvideo = () => {
   
 
   return (
-    <section className="pb-24">
+    <section className="pt-0 md:pt-12 pb-24">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -116,7 +116,7 @@ const Mainvideo = () => {
           onViewportEnter={() => setVideoKey(prev => prev + 1)} // Incrementa la key per restart
           className="w-full"
         >
-          <div className="aspect-video w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group bg-gray-900">
+          <div className="aspect-video w-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group bg-gray-9000">
             <video
               key={videoKey} // Forza il re-mount del video per farlo ripartire
               className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
