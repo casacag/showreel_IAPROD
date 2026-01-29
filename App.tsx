@@ -17,7 +17,7 @@ import { motion } from 'framer-motion';
 const getUrl = (fileName) => {
   // Prende la base del sito (solitamente '/') e aggiunge la cartella video
   const base = import.meta.env.BASE_URL;
-  const path = `${base}video/${fileName}`;
+  const path = `${base}pubblic/video/${fileName}`;
   
   // Puliamo eventuali doppi slash //
   return path.replace(/\/+/g, '/');
