@@ -14,7 +14,14 @@ import {
 import { motion } from 'framer-motion';
 
 // --- Components ---
-
+const getUrl = (fileName) => {
+  // Prende la base del sito (solitamente '/') e aggiunge la cartella video
+  const base = import.meta.env.BASE_URL;
+  const path = `${base}video/${fileName}`;
+  
+  // Puliamo eventuali doppi slash //
+  return path.replace(/\/+/g, '/');
+};
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,7 +35,7 @@ const Navbar = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass py-4 shadow-lg' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         <a href="#home" className="text-2xl font-bold tracking-tighter text-white">
-          AI<span className="text-purple-500">PROD</span>
+          IA<span className="text-purple-500">PROD</span>
         </a>
 
         {/* Minimalist CTA instead of section links */}
@@ -83,6 +90,56 @@ const Hero = () => {
             >
               Parliamo del tuo progetto
             </a>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+const Mainvideo = () => {
+  const [videoKey, setVideoKey] = useState(0);
+
+  const videoData = {
+    title: "Showreel 2026",
+    file: "miscuglio.mp4",
+    subtitle: "Un concentrato di tecnologia e visione artistica.",
+  };
+  
+
+  return (
+    <section className="pb-24">
+      <div className="container mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false, amount: 0.5 }} // Si attiva quando è visibile al 50%
+          onViewportEnter={() => setVideoKey(prev => prev + 1)} // Incrementa la key per restart
+          className="w-full"
+        >
+          <div className="aspect-video w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group bg-gray-900">
+            <video
+              key={videoKey} // Forza il re-mount del video per farlo ripartire
+              className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+              src={getUrl(videoData.file)}
+              autoPlay
+              muted // OBBLIGATORIO per l'autoplay nei browser moderni
+              loop
+              playsInline
+              preload="auto"
+              controls
+            />
+            
+            {/* Desktop Overlay */}
+            <div className="hidden md:block absolute bottom-8 left-8 pointer-events-none">
+              <h3 className="text-3xl font-bold text-white mb-2">{videoData.title}</h3>
+              <p className="text-gray-300">{videoData.subtitle}</p>
+            </div>
+          </div>
+
+          {/* Mobile Caption */}
+          <div className="md:hidden mt-4 px-2">
+            <h3 className="text-xl font-bold text-white">{videoData.title}</h3>
+            <p className="text-gray-400 text-sm mt-1">{videoData.subtitle}</p>
           </div>
         </motion.div>
       </div>
@@ -160,30 +217,6 @@ const Timeline = () => {
 };
 
 const Showreel = () => {
-  // Ensure videos are included in Vite build and URLs are correctly resolved in production.
-  const videoModules = import.meta.glob('./video/*.mp4', {
-    eager: true,
-    query: '?url',
-    import: 'default',
-  }) as Record<string, string>;
-
-  const videoUrlsByFileName: Record<string, string> = Object.fromEntries(
-    Object.entries(videoModules).map(([filePath, url]) => {
-      const fileName = filePath.split('/').pop() ?? filePath;
-      return [fileName, url];
-    })
-  );
-
-  const videoUrl = (fileName: string) =>
-    videoUrlsByFileName[fileName] ??
-    `${import.meta.env.BASE_URL}video/${encodeURIComponent(fileName)}`;
-
-  const mainVideo = {
-    title: "Showreel 2026",
-    file: "miscuglio.mp4",
-    subtitle: "Un concentrato di tecnologia e visione artistica.",
-  };
-
   const samples = [
     { title: "Arrampicata", file: "arrampicata.mp4" },
     { title: "Balena", file: "balena (1).mp4" },
@@ -195,71 +228,23 @@ const Showreel = () => {
     <section id="work" className="py-24">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 uppercase tracking-tighter text-white">Portfolio & Showreel</h2>
+          <h2 className="text-4xl font-bold mb-4 uppercase tracking-tighter text-white">Progetti Selezionati</h2>
           <div className="w-20 h-1 bg-purple-600 mx-auto"></div>
         </div>
-
-        <div className="max-w-5xl mx-auto space-y-12">
-          {/* Main Video */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="w-full"
-          >
-            <div className="aspect-video w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group">
-              <video
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70"
-                src={videoUrl(mainVideo.file)}
-                playsInline
-                preload="metadata"
-                controls
-              />
-
-              {/* Desktop overlay (avoid covering controls on mobile) */}
-              <div className="hidden md:block absolute bottom-8 left-8 pointer-events-none">
-                <h3 className="text-3xl font-bold text-white mb-2">{mainVideo.title}</h3>
-                <p className="text-gray-300">{mainVideo.subtitle}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          {samples.map((sample, idx) => (
+            <motion.div key={idx} whileHover={{ y: -5 }}>
+              <div className="group relative rounded-xl overflow-hidden border border-white/5 aspect-[4/3] bg-gray-900">
+                <video
+                  className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
+                  src={getUrl(sample.file)}
+                  controls
+                  playsInline
+                />
               </div>
-            </div>
-
-            {/* Mobile caption */}
-            <div className="md:hidden mt-4 px-2">
-              <h3 className="text-xl font-bold text-white">{mainVideo.title}</h3>
-              <p className="text-gray-400 text-sm mt-1">{mainVideo.subtitle}</p>
-            </div>
-          </motion.div>
-
-          {/* Video Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {samples.map((sample, idx) => (
-              <motion.div 
-                key={idx}
-                whileHover={{ y: -5 }}
-                className="w-full"
-              >
-                <div className="group relative rounded-xl overflow-hidden border border-white/5 aspect-[4/3]">
-                  <video
-                    className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
-                    src={videoUrl(sample.file)}
-                    controls
-                    playsInline
-                    preload="metadata"
-                  />
-
-                  {/* Overlay title on larger screens (don't cover controls on mobile) */}
-                  <div className="hidden sm:flex absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex-col justify-end p-4 pointer-events-none">
-                    <h4 className="font-bold text-white text-sm">{sample.title}</h4>
-                  </div>
-                </div>
-
-                {/* Mobile caption */}
-                <div className="sm:hidden mt-2 px-1">
-                  <h4 className="font-bold text-white text-sm">{sample.title}</h4>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              <h4 className="font-bold text-white text-sm mt-3">{sample.title}</h4>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -417,7 +402,7 @@ const Footer = () => {
     <footer className="py-12 border-t border-white/5">
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-xl font-bold tracking-tighter text-white">
-          AI<span className="text-purple-500">PROD</span>
+          IA<span className="text-purple-500">PROD</span>
         </div>
         <p className="text-gray-500 text-sm">
           &copy; {new Date().getFullYear()} AI Specialist & Production Portfolio. All rights reserved.
@@ -440,6 +425,7 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-[#030712]">
       <Navbar />
       <Hero />
+      <Mainvideo />
       <Timeline />
       <Showreel />
       <Pricing />
