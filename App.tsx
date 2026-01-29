@@ -69,7 +69,7 @@ const Hero = () => {
             Future of Video Production
           </span>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 leading-tight">
-            Dove l'Ingegneria incontra <br />
+            Dove le scienze applicate incontrano <br />
             <span className="text-gradient">l'Intelligenza Artificiale</span>
           </h1>
           <p className="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl mb-10 leading-relaxed">
