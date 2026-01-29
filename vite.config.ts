@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
       // GitHub Pages hosts the site under /<repo>/ (here: /showreel/)
-      base: '/showreel/',
+      base: '/showreel_IAPROD/',
       server: {
         port: 3000,
         host: '0.0.0.0',
