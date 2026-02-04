@@ -95,7 +95,7 @@ const ShowreelHero = () => {
           <p className="max-w-2xl mx-auto text-gray-300 text-lg md:text-xl mb-12 leading-relaxed font-light">
             Dove le Scienze Applicate incontrano l'Intelligenza Artificiale.
             <br />
-            <strong className="text-white">Trasformo il video marketing in esperienze cinetiche.</strong>
+            <strong className="text-white">Trasformo il video marketing in esperienze cinematografiche.</strong>
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
