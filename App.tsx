@@ -151,6 +151,7 @@ const CircularWorks = () => {
     { title: "Giorh Mix", file: "giorh audio 7 .mp4", desc: "Sound Design" },
     { title: "Quad", file: "quad.mp4", desc: "Offroad Dynamics" },
     { title: "Mandrolisai", file: "vino_mandrolisai.mp4", desc: "Authentic wine" },
+    { title: "Orologio", file: "orologio.mp4", desc: "Aesthetic watch" },
   ];
 
   const nextSlide = () => setActiveIndex((prev) => (prev + 1) % projects.length);
